@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN"      
+ "http://ibatis.apache.org/dtd/ibatis-3-mapper.dtd">
+
+<mapper namespace="com.rixin.news.dao.INewsDao">
+
+	<insert id="createNews" parameterType="com.rixin.news.model.News">
+		insert into t_news
+		values(#{id},#{author},#{title},#{content},#{img},#{typeid},#{typepath},#{publishtime})
+	</insert>
+
+	<select id="getNews" parameterType="com.rixin.news.model.News"
+		resultType="com.rixin.news.model.News">
+		select news.*, dict.name as typename, dict.url as typeurl
+		from t_news
+		news,t_dictionary dict
+		where news.typeid = dict.id
+		<if test="typepath != null">
+			and news.typepath like CONCAT(#{typepath},'%')
+		</if>
+		<if test="title != null">
+			and news.title like CONCAT('%',#{title},'%')
+		</if>
+		order by news.publishtime desc
+		<if test="paging=='yes'">
+			limit #{begin},#{pageSize}
+		</if>
+	</select>
+
+	<select id="getNewsById" parameterType="String"
+		resultType="com.rixin.news.model.News">
+		select news.*, dict.name as typename, dict.url as typeurl
+		from t_news
+		news,t_dictionary dict
+		where news.typeid = dict.id and
+		news.id = #{id}
+	</select>
+
+	<select id="getNewsByTypeId" parameterType="String"
+		resultType="com.rixin.news.model.News">
+		select news.*, dict.name as typename, dict.url as typeurl
+		from t_news
+		news,t_dictionary dict
+		where news.typeid = dict.id and
+		news.typeid =
+		#{typeid}
+		order by publishtime desc
+	</select>
+
+	<update id="updateNews" parameterType="com.rixin.news.model.News">
+		update t_news set
+		author=#{author},title=#{title},content=#{content},img=#{img},typeid=#{typeid},typepath=#{typepath},publishtime=#{publishtime}
+		where id=#{id}
+	</update>
+
+	<delete id="deleteNewsById" parameterType="String">
+		delete from t_news
+		where id=#{id}
+	</delete>
+
+</mapper>

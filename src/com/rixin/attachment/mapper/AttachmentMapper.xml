@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN"      
+ "http://ibatis.apache.org/dtd/ibatis-3-mapper.dtd">
+<mapper namespace="com.rixin.attachment.dao.IAttachmentDao">
+
+	<!-- 批量新增 -->
+	<insert id="addAttchments" parameterType="java.util.List">
+		INSERT INTO t_attachment
+		(id,name,dataid,path,smallPath)
+		VALUES
+		<foreach collection="list" item="item" index="index"
+			separator=",">
+			(#{item.id},#{item.name},#{item.dataid},#{item.path},#{item.smallPath})
+		</foreach>
+	</insert>
+
+	<!-- 批量删除 -->
+	<delete id="deleteAttchments" parameterType="java.util.List">
+		delete from t_attachment where id in
+		<foreach item="item" collection="list" open="(" separator=","
+			close=")">
+			#{item.id}
+		</foreach>
+	</delete>
+
+	<!-- 根据外键ID查询附件信息 -->
+	<select id="getAttchmentsByDataid" parameterType="String"
+		resultType="com.rixin.attachment.model.Attachment">
+		select * from t_attachment where dataid =#{dataid}
+	</select>
+
+	<!-- 根据附件ID查询附件信息 -->
+	<select id="getAttchmentById" parameterType="String"
+		resultType="com.rixin.attachment.model.Attachment">
+		select * from t_attachment where id =#{id}
+	</select>
+</mapper>

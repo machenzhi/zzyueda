@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN"      
+ "http://ibatis.apache.org/dtd/ibatis-3-mapper.dtd">
+
+<mapper namespace="com.rixin.user.dao.IUserDao">
+
+	<select id="login" parameterType="com.rixin.user.model.User"
+		resultType="com.rixin.user.model.User">
+		select * from t_user where username = #{username}
+	</select>
+
+
+	<update id="updatePassword" parameterType="java.util.Map">
+		update t_user set
+		password=#{password}
+		where id=#{id}
+	</update>
+
+</mapper>

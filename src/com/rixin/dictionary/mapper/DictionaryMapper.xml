@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN"      
+ "http://ibatis.apache.org/dtd/ibatis-3-mapper.dtd">
+
+<mapper namespace="com.rixin.dictionary.dao.IDictionaryDao">
+
+	<insert id="addDictionary" parameterType="com.rixin.dictionary.model.Dictionary">
+		insert into
+		t_dictionary (id,name,visible,pid,abspath,isinfo,url,css,sort,date)
+		values(#{id},#{name},#{visible},#{pid},#{abspath},#{isinfo},#{url},#{css},#{sort},#{date})
+	</insert>
+
+	<update id="updateDictionaryById" parameterType="com.rixin.dictionary.model.Dictionary">
+		update t_dictionary
+		<set>
+			<if test="name != null and name !=''">
+				name=#{name},
+			</if>
+			<if test="visible != null and visible !=''">
+				visible=#{visible},
+			</if>
+			<if test="pid != null and pid !=''">
+				pid=#{pid},
+			</if>
+			<if test="abspath != null and abspath !=''">
+				abspath=#{abspath},
+			</if>
+			<if test="isinfo != null and isinfo !=''">
+				isinfo=#{isinfo},
+			</if>
+			<if test="url != null and url !=''">
+				url=#{url},
+			</if>
+			<if test="css != null and css !=''">
+				css=#{css},
+			</if>
+			<if test="sort != null and sort !=''">
+				sort=#{sort},
+			</if>
+			<if test="date != null and date !=''">
+				date=#{date}
+			</if>
+		</set>
+		where id=#{id}
+	</update>
+
+	<delete id="deleteDictionaryById" parameterType="String">
+		delete from
+		t_dictionary
+		where id=#{id}
+	</delete>
+
+	<delete id="deleteDictionaryByPath" parameterType="String">
+		delete from
+		t_dictionary where abspath like
+		CONCAT('%',#{abspath,jdbcType=VARCHAR},'%')
+	</delete>
+
+	<select id="getDictionaryById" parameterType="String"
+		resultType="com.rixin.dictionary.model.Dictionary">
+		select * from t_dictionary where id = #{id}
+	</select>
+
+	<select id="getDictionarysByPid" parameterType="String"
+		resultType="com.rixin.dictionary.model.Dictionary">
+		select * from t_dictionary where pid = #{pid} order by sort
+	</select>
+
+	<select id="getVisibleDictionarysByPid" parameterType="String"
+		resultType="com.rixin.dictionary.model.Dictionary">
+		select * from t_dictionary where pid = #{pid} and visible
+		='yes' order by sort
+	</select>
+
+	<select id="getDictionarysByAbspath" parameterType="String"
+		resultType="com.rixin.dictionary.model.Dictionary">
+		select * from t_dictionary where abspath = #{abspath}
+	</select>
+
+	<select id="getDictionarys" resultType="com.rixin.dictionary.model.Dictionary">
+		select * from
+		t_dictionary
+	</select>
+
+	<select id="getMaxId" resultType="int">
+		select max(id) from
+		t_dictionary
+	</select>
+
+	<select id="getAllLastDictionarys" resultType="com.rixin.dictionary.model.Dictionary">
+		select * from
+		t_dictionary a where NOT EXISTS (select * from t_dictionary b where
+		a.id = b.pid) and a.isinfo='yes'
+	</select>
+
+	<select id="getAllDictionarys4InfoType" resultType="com.rixin.dictionary.model.Dictionary">
+		select * from
+		t_dictionary where isinfo='yes'
+	</select>
+
+	<select id="getAllFixedDictionarys" resultType="com.rixin.dictionary.model.Dictionary">
+		select * from
+		t_dictionary where fixed='yes' order by sort
+	</select>
+</mapper>

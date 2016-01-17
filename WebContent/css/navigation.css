@@ -1,0 +1,81 @@
+body,div,dl,dt,dd,ul,ol,li,h1,h2,h3,h4,h5,h6,pre,code,form,fieldset,legend,input,button,textarea,p,blockquote,th,td,hr{margin:0;padding:0}
+body{
+	font-size:14px;
+}
+.navbg ul, .navbg ul li {
+	list-style-type:none;
+}
+
+/*网站头部*/
+.col960 {
+	width:960px;
+	margin:auto;
+}
+.navbg {
+	height:45px;
+	width: 100%;
+	background: #1747a0;/* 导航条 背景色 -----------------------------------------------------------*/
+	box-shadow: 1px 1px 7px #999;
+	position:absolute;
+	z-index:99;
+	left:0;
+}
+#navul a {
+	font:normal 16px 'microsoft yahei';
+	color:#fff;
+}
+
+#navul li ,#yiji a{
+	float: left;
+	margin-right: 1px;
+	width:100px;
+	height:45px;
+	position:relative;
+	text-align:center;
+	line-height:45px;
+}
+#navul li.navhome {
+	text-align:left;
+	padding:0 0px 0 40px;
+	width:60px;
+}
+#navul li ul {
+	display:none;
+	position:absolute;
+	z-index:10000;
+	top:31px;			/* 二级下拉菜单 绝对定位*/
+	left:0px;
+	background:#1747cc;/*二级背景颜色--------------------------------------------------------------------------*/
+}
+#navul li ul li {
+	display:block;
+	width:100px;
+	float:none;
+	margin-right:0px;
+	height:28px;
+	position:relative;
+	line-height:28px;
+}
+#navul li.navmoon {
+	background:#1747cc; /*导航栏上  鼠标经过时 的  背景色--------------------------------------------------------------------*/
+	height:45px;
+	line-height:45px;
+	cursor: pointer;
+}
+#navul li.navmoon a {
+	color:#FFFFFF;
+}
+#navul li.navhome a:hover {
+	color:#FCFF00;
+}
+#navul li.navmoon ul {
+	display:block;
+}
+#navul li.navmoon ul a {
+	display:block;
+	margin: 10px 15px   ;
+	text-align: left;
+}
+#navul li.navmoon ul a:hover {
+	color:#5EB4FF;/*二级菜单 li  鼠标经过时 的  背景色--------------------------------------------------------------------*/
+}
