@@ -131,7 +131,7 @@
 			<mvc:mapping path="/**/create*.do" />
 			<mvc:mapping path="/**/update*.do" />
 			<mvc:mapping path="/**/delete*.do" />
-			<bean class="com.rixin.common.interceptor.HouTaiTodoInterceptor" />
+			<bean class="com.rixin.common.interceptor.DeleteHtmlInterceptor" />
 		</mvc:interceptor>
 	</mvc:interceptors>
 	<!-- SpringMVC上传文件时，需要配置MultipartResolver处理器 -->
