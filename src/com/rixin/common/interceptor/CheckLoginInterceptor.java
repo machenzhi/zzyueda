@@ -28,16 +28,21 @@ public class CheckLoginInterceptor implements HandlerInterceptor {
 	 * ，这种中断方式是令preHandle的返 回值为false，当preHandle的返回值为false的时候整个请求就结束了。
 	 */
 	public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object obj) throws Exception {
+		if (request.getSession().getServletContext().getAttribute("basePath") == null) {
+			String path = request.getContextPath();
+			String basePath = request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort()
+					+ path + "/";
+			request.getSession().getServletContext().setAttribute("basePath", basePath);
+		}
 		// 获取保存在session中的user对象
 		User user = (User) request.getSession().getAttribute("user");
 		// 判断session是否有user对象
 		if (user == null) {
-			// 没有登陆，重定向到登陆页面
-			response.sendRedirect(request.getContextPath());
-			log.debug("登录验证失败，自动跳转至：" + request.getContextPath());
+			request.setAttribute("logout", "timeout");
+			request.getRequestDispatcher("/login.jsp").forward(request, response);
 			return false;
 		} else {
-			// 已经登陆可以继续访问
+			// 已经登陆可以访问主页
 			return true;
 		}
 	}
@@ -49,7 +54,7 @@ public class CheckLoginInterceptor implements HandlerInterceptor {
 	 * ，也就是说在这个方法中你可以对ModelAndView进行操作。
 	 * 这个方法的链式结构跟正常访问的方向是相反的，也就是说先声明的Interceptor拦截器该方法反而会后调用
 	 */
-	public void postHandle(HttpServletRequest arg0, HttpServletResponse arg1, Object arg2, ModelAndView arg3)
+	public void postHandle(HttpServletRequest request, HttpServletResponse response, Object arg2, ModelAndView mv)
 			throws Exception {
 	}
 
@@ -58,7 +63,7 @@ public class CheckLoginInterceptor implements HandlerInterceptor {
 	 * 也就是DispatcherServlet渲染了视图执行，
 	 * 这个方法的主要作用是用于清理资源的，当然这个方法也只能在当前这个Interceptor的preHandle方法的返回值为true时才会执行。
 	 */
-	public void afterCompletion(HttpServletRequest arg0, HttpServletResponse arg1, Object arg2, Exception arg3)
+	public void afterCompletion(HttpServletRequest request, HttpServletResponse response, Object arg2, Exception arg3)
 			throws Exception {
 	}
 

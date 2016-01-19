@@ -14,7 +14,7 @@ import com.rixin.common.util.RixinUtil;
  * @author Administrator
  *
  */
-public class HouTaiTodoInterceptor implements HandlerInterceptor {
+public class DeleteHtmlInterceptor implements HandlerInterceptor {
 
 	/**
 	 * preHandle方法是进行处理器拦截用的，顾名思义，该方法将在Controller处理之前进行调用，

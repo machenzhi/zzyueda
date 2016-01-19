@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlrewrite>
-   	<rule>
-	   <from>/admin.html</from>
-	   <to type="redirect">common/gotoQiantaiPage.do?gotourl=login</to>
-    </rule>
+	<rule>
+		<from>/admin.html</from>
+		<to type="redirect">login.jsp</to>
+	</rule>
 </urlrewrite>

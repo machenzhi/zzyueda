@@ -8,6 +8,7 @@ import java.util.Map;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -51,6 +52,12 @@ public class NewsController {
 	@Resource
 	@Qualifier("AttachmentServiceImpl")
 	private IAttachmentService attachmentService;
+
+	@RequestMapping("/main.do")
+	public ModelAndView main(HttpSession session) {
+		ModelAndView mav = new ModelAndView("main");
+		return mav;
+	}
 
 	@RequestMapping("/createNews.do")
 	public ModelAndView createNews(News news, HttpServletRequest request) {

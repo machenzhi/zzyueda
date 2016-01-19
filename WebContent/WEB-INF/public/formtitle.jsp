@@ -6,7 +6,7 @@
 <header class="am-topbar admin-header">
 	<div class="am-topbar-brand">
 		<strong style="color: #5eb95e">${sysinfo.name}</strong> <span
-			class="am-badge">后台管理系统 v1.0</span>
+			class="am-badge">网站后台管理系统 v1.0</span>
 	</div>
 	<div class="am-collapse am-topbar-collapse" id="topbar-collapse">
 		<ul

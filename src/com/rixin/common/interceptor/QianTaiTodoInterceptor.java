@@ -4,14 +4,12 @@ import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.web.servlet.HandlerInterceptor;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.rixin.common.util.RixinUtil;
 import com.rixin.dictionary.service.IDictionaryService;
 import com.rixin.news.service.INewsService;
-import com.rixin.system.sysinfo.service.ISysinfoService;
 
 /**
  * 前台请求必做操作拦截器
@@ -20,15 +18,10 @@ import com.rixin.system.sysinfo.service.ISysinfoService;
  *
  */
 public class QianTaiTodoInterceptor implements HandlerInterceptor {
-	@Resource
-	@Qualifier("NewsServiceImpl")
+	@Resource(name = "NewsServiceImpl")
 	private INewsService newsService;
-	@Resource
-	@Qualifier("DictionaryServiceImpl")
+	@Resource(name = "DictionaryServiceImpl")
 	private IDictionaryService dictionaryService;
-	@Resource
-	@Qualifier("SysinfoServiceImpl")
-	private ISysinfoService sysinfoService;
 
 	/**
 	 * preHandle方法是进行处理器拦截用的，顾名思义，该方法将在Controller处理之前进行调用，
@@ -39,6 +32,12 @@ public class QianTaiTodoInterceptor implements HandlerInterceptor {
 	 * ，这种中断方式是令preHandle的返 回值为false，当preHandle的返回值为false的时候整个请求就结束了。
 	 */
 	public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object obj) throws Exception {
+		if (request.getSession().getServletContext().getAttribute("basePath") == null) {
+			String path = request.getContextPath();
+			String basePath = request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort()
+					+ path + "/";
+			request.getSession().getServletContext().setAttribute("basePath", basePath);
+		}
 		return true;
 	}
 
@@ -51,8 +50,6 @@ public class QianTaiTodoInterceptor implements HandlerInterceptor {
 	 */
 	public void postHandle(HttpServletRequest request, HttpServletResponse response, Object arg2, ModelAndView mv)
 			throws Exception {
-		// 获取系统信息
-		sysinfoService.getSysinfo(request);
 		// 获取菜单
 		dictionaryService.getMenu(request);
 		// 固定菜单

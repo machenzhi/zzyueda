@@ -63,8 +63,6 @@ public class CommonController {
 			url = "login";
 		}
 		log.debug("跳转页面：" + url);
-		// 获取系统信息
-		sysinfoService.getSysinfo(request);
 		return url;
 	}
 
@@ -99,6 +97,6 @@ public class CommonController {
 				user = null;
 			}
 		}
-		return "login";
+		return "../login";
 	}
 }

@@ -16,7 +16,6 @@
 <link rel="icon" type="image/png" href="../img/favicon.png">
 <link rel="stylesheet" href="../assets/css/amazeui.min.css">
 <link rel="stylesheet" href="../assets/css/app.css">
-<link rel="stylesheet" href="../assets/css/demo.css">
 <link rel="stylesheet" href="../assets/css/admin.css">
 <script src="../assets/js/jquery.min.js"></script>
 <script src="../assets/js/amazeui.min.js"></script>
