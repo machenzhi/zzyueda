@@ -2,17 +2,9 @@
 	pageEncoding="utf-8"%>
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%
-	String requestUrl = request.getParameter("requestUrl");
-	if (requestUrl.indexOf("?") > -1) {
-		requestUrl += "&";
-	} else {
-		requestUrl += "?";
-	}
-	String function = request.getParameter("function");
 	String randomNum = String.valueOf(Math.random()).substring(2);
 %>
 <script type="text/javascript">
-
 	$(function() {
 		$(document).keydown(function(event) {
 			if (event.keyCode == 13) {
@@ -28,8 +20,6 @@
 
 	//分页跳转
 	function toPage(){
-		//var searchKeywords = $("#searchKeywords").val().trim();
-		var searchKeywords="";
 		var toPage = parseInt($("#<%=randomNum%>toPageNum").val());//跳转页码数
 		var totalPage = "${page.totalPage}";//总页码数
 		var currentPage = "${page.currentPage}";//当前页码数
@@ -37,7 +27,7 @@
 			return;
 		}else{
 			if(toPage <= totalPage && toPage > 0){
-				<%=function%>("<%=requestUrl%>currentPage="+toPage+"&searchKeywords="+searchKeywords)
+				pageFunction(toPage)
 			} else {
 				alert("请输入正确的页码，如：1 2 3。");
 			}
@@ -49,27 +39,25 @@
 		<li><small>共${page.rows}条记录</small></li>
 		<li id="firstPage"
 			<c:if test="${page.currentPage==1}">class="am-disabled"</c:if>><a
-			class="am-btn-sm"
-			href="javascript:<%=function%>('<%=requestUrl%>currentPage=1&searchKeywords=${page.searchKeywords}')"
+			class="am-btn-sm" href="javascript:pageFunction('1')"
 			<c:if test="${page.currentPage==1}">disabled="disabled"</c:if>>首页</a>
 		</li>
 		<li id="previousPage"
 			<c:if test="${page.currentPage==1}">class="am-disabled"</c:if>><a
 			class="am-btn-sm"
-			href="javascript:<%=function%>('<%=requestUrl%>currentPage=${page.currentPage-1<1?1:page.currentPage-1}&searchKeywords=${page.searchKeywords}')"
+			href="javascript:pageFunction('${page.currentPage-1<1?1:page.currentPage-1}')"
 			<c:if test="${page.currentPage==1}">disabled="disabled"</c:if>>上一页</a>
 		</li>
 		<li><small>第${page.currentPage}页/共${page.totalPage}页</small></li>
 		<li id="nextPage"
 			<c:if test="${page.currentPage==page.totalPage}">class="am-disabled"</c:if>><a
 			class="am-btn-sm"
-			href="javascript:<%=function%>('<%=requestUrl%>currentPage=${page.currentPage+1<=page.totalPage?page.currentPage+1:page.totalPage}&searchKeywords=${page.searchKeywords}')"
+			href="javascript:pageFunction('${page.currentPage+1<=page.totalPage?page.currentPage+1:page.totalPage}')"
 			<c:if test="${page.currentPage==page.totalPage}">disabled="disabled"</c:if>>下一页</a>
 		</li>
 		<li id="lastPage"
 			<c:if test="${page.currentPage==page.totalPage}">class="am-disabled"</c:if>><a
-			class="am-btn-sm"
-			href="javascript:<%=function%>('<%=requestUrl%>currentPage=${page.totalPage}&searchKeywords=${page.searchKeywords}')"
+			class="am-btn-sm" href="javascript:pageFunction('${page.totalPage}')"
 			<c:if test="${page.currentPage==page.totalPage}">disabled="disabled"</c:if>>尾页</a>
 		</li>
 		<li <c:if test="${page.totalPage=='1'}">class="am-disabled"</c:if>><small>第

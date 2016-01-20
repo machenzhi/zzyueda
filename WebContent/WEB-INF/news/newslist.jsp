@@ -3,6 +3,15 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%><script
 	src="${basePath}assets/js/amazeui.min.js"></script>
 <script type="text/javascript">
+	/*
+	 分页函数
+	 需要在FORM表单中加入隐藏域currentPage，默认值为1。
+	 */
+	function pageFunction(currentPage) {
+		$('#currentPage').val(currentPage);
+		//业务自定义查询函数
+		query();
+	}
 	//弹出新窗口
 	function openNewWindow(url) {
 		window.open(url);
@@ -66,6 +75,7 @@
 </div>
 <div class="am-u-sm-12 am-u-md-12" style="padding: 0px;">
 	<form class="am-form" action="" id="queryForm">
+		<input type="hidden" id="currentPage" name="currentPage" value="1">
 		<div style="margin-top: 2px;"
 			class="am-input-group am-u-sm-12 am-u-md-6">
 			<span class="am-input-group-label" style="width: 150px">标题</span> <input
@@ -147,7 +157,4 @@
 	</tbody>
 </table>
 <!--分页组件-->
-<jsp:include page="../public/page.jsp">
-	<jsp:param name="requestUrl" value="${basePath}news/getNewsListPage.do" />
-	<jsp:param name="function" value="initContent" />
-</jsp:include>
+<jsp:include page="../public/pagecomponent.jsp" />
