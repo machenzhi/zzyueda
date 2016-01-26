@@ -1,4 +1,4 @@
-package com.rixin.common.util;
+package com.rixin.common.model;
 
 /**
  * 所有分页组件的父类， 封装了分页相关的公共参数。

@@ -2,7 +2,7 @@ package com.rixin.news.model;
 
 import java.io.Serializable;
 
-import com.rixin.common.util.Page;
+import com.rixin.common.model.Page;
 
 /**
  * 文章信息类

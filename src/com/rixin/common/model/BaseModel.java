@@ -1,9 +1,10 @@
-package com.rixin.common.util;
+package com.rixin.common.model;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import com.rixin.attachment.model.Attachment;
+import com.rixin.common.util.RixinUtil;
 
 /**
  * 基础javabean，供业务javabean继承使用

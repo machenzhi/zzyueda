@@ -1,6 +1,6 @@
 package com.rixin.attachment.model;
 
-import com.rixin.common.util.Page;
+import com.rixin.common.model.Page;
 
 /**
  * 附件javabean

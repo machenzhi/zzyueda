@@ -10,7 +10,7 @@ import com.rixin.news.model.News;
 
 public interface INewsService {
 
-	void createNews(News news, List<MultipartFile> uploadFile, HttpServletRequest request) throws Exception;
+	void createNews(News news, List<MultipartFile> uploadFiles, HttpServletRequest request) throws Exception;
 
 	List<News> getNews(News news);
 
@@ -20,7 +20,7 @@ public interface INewsService {
 
 	void deleteNewsByIds(String ids);
 
-	void updateNews(News news, List<MultipartFile> uploadFile, HttpServletRequest request) throws Exception;
+	void updateNews(News news, List<MultipartFile> uploadFiles, HttpServletRequest request) throws Exception;
 
 	public void getPropNews(HttpServletRequest request);
 

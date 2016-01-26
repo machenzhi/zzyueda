@@ -35,7 +35,7 @@ public class NewsServiceImpl implements INewsService {
 	 * 
 	 * @throws Exception
 	 */
-	public void createNews(News news, List<MultipartFile> uploadFile, HttpServletRequest request) throws Exception {
+	public void createNews(News news, List<MultipartFile> uploadFiles, HttpServletRequest request) throws Exception {
 		String id = RixinUtil.getUUID();
 		news.setId(id);
 		String[] types = news.getTypeid().split("#");
@@ -43,7 +43,7 @@ public class NewsServiceImpl implements INewsService {
 		news.setTypepath(types[1]);
 		news.setPublishtime(RixinUtil.getCurrentDateTime());
 		newsDao.createNews(news);
-		attachmentService.uploadFiles(news.getId(), null, uploadFile, request);
+		attachmentService.uploadFiles(news.getId(), null, uploadFiles, request);
 	}
 
 	public List<News> getNews(News news) {
@@ -68,16 +68,16 @@ public class NewsServiceImpl implements INewsService {
 		}
 	}
 
-	public void updateNews(News news, List<MultipartFile> uploadFile, HttpServletRequest request) throws Exception {
+	public void updateNews(News news, List<MultipartFile> uploadFiles, HttpServletRequest request) throws Exception {
 		String[] types = news.getTypeid().split("#");
 		news.setTypeid(types[0]);
 		news.setTypepath(types[1]);
 		news.setPublishtime(RixinUtil.getCurrentDateTime());
 		newsDao.updateNews(news);
-		if (!uploadFile.get(0).isEmpty()) {
-			attachmentService.uploadFiles(news.getId(), null, uploadFile, request);
+		if (!uploadFiles.get(0).isEmpty()) {
+			attachmentService.uploadFiles(news.getId(), null, uploadFiles, request);
 		} else {
-			attachmentService.uploadFiles(news.getId(), news.getAttachments(), uploadFile, request);
+			attachmentService.uploadFiles(news.getId(), news.getAttachments(), uploadFiles, request);
 		}
 	}
 
