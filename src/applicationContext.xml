@@ -59,8 +59,15 @@
 	<!-- 开启注解扫描，支持IOC -->
 	<context:component-scan base-package="com.rixin" />
 
-	<!-- 开启MVC注解，支持Spring MVC -->
-	<mvc:annotation-driven />
+		<!-- 开启注解 -->
+	<mvc:annotation-driven>
+		<!-- 消息转换器 -->
+		<mvc:message-converters register-defaults="true">
+			<bean class="org.springframework.http.converter.StringHttpMessageConverter">
+				<property name="supportedMediaTypes" value="text/plain;charset=UTF-8" />
+			</bean>
+		</mvc:message-converters>
+	</mvc:annotation-driven>
 	<bean
 		class="org.springframework.web.servlet.view.InternalResourceViewResolver">
 		<property name="prefix" value="/WEB-INF/" />
