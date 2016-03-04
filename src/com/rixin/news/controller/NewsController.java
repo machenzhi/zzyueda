@@ -179,9 +179,9 @@ public class NewsController {
 		String temptypepath = typepath.replace(".", "#");
 		String[] paths = temptypepath.split("#");
 		Dictionary dic = new Dictionary();
-		dic.setId("0");
+		dic.setId("index");
 		dic.setName("首页");
-		dic.setUrl("common/qiantai/gotoPage.do?gotourl=main");
+		dic.setUrl("common/qiantai/gotoPage.do?gotourl=index");
 		mianbaoList.add(dic);
 		for (String typeid : paths) {
 			Dictionary dictionary = dictionaryService.getDictionaryById(typeid);

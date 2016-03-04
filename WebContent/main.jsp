@@ -76,7 +76,7 @@
 					</div>
 					<div class="am-fr">
 						<a
-							onClick="openPage('${basePath}news/qiantai/getNewsImgList.do?typename=${productcenter.name}&typeid=${productcenter.id}&typepath=${productcenter.abspath}&htmlName=${productcenter.id}')"
+							onClick="openPage('${basePath}news/qiantai/getNewsImgList.do?typename=${yewufanwei.name}&typeid=${yewufanwei.id}&typepath=${yewufanwei.abspath}&htmlName=${yewufanwei.id}')"
 							href="javascript:void(0)">更多</a>
 					</div>
 				</div>
@@ -97,7 +97,7 @@
 											<h3 class="am-gallery-title">${news.title}&nbsp;</h3>
 											<div class="am-gallery-desc">
 												<a class="am-badge am-badge-success"
-													onClick="openPage('${news.typeurl}&typename=${news.typename}&typeid=${news.typeid}&typepath=${news.typepath}&htmlName=${news.typeid}')"
+													onClick="openPage('${basePath}${news.typeurl}&typename=${news.typename}&typeid=${news.typeid}&typepath=${news.typepath}&htmlName=${news.typeid}')"
 													href="javascript:void(0)">${news.typename}</a>
 											</div>
 										</a>
@@ -139,7 +139,7 @@
 												<h3 class="am-gallery-title">${news.title}&nbsp;</h3>
 												<div class="am-gallery-desc">
 													<a class="am-badge am-badge-success"
-														onClick="openPage('${news.typeurl}&typename=${news.typename}&typeid=${news.typeid}&typepath=${news.typepath}&htmlName=${news.typeid}')"
+														onClick="openPage('${basePath}${news.typeurl}&typename=${news.typename}&typeid=${news.typeid}&typepath=${news.typepath}&htmlName=${news.typeid}')"
 														href="javascript:void(0)">${news.typename}</a>
 												</div>
 											</a>

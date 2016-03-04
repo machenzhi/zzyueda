@@ -13,7 +13,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.rixin.common.util.MD5Util;
-import com.rixin.common.util.RixinUtil;
 import com.rixin.user.model.User;
 import com.rixin.user.service.IUserService;
 
@@ -70,10 +69,10 @@ public class UserController {
 	public Map<String, Object> updatePassword(String oldPassword, String newPassword, HttpSession session) {
 		Map<String, Object> result = new HashMap<String, Object>();
 		User oldUser = (User) session.getAttribute("user");
-		if (RixinUtil.MD5(oldPassword).equals(oldUser.getPassword())) {
+		if (MD5Util.MD5(oldPassword).equals(oldUser.getPassword())) {
 			Map<String, Object> map = new HashMap<String, Object>();
 			map.put("id", oldUser.getId());
-			map.put("password", RixinUtil.MD5(newPassword));
+			map.put("password", MD5Util.MD5(newPassword));
 			boolean isSuccess = userService.updatePassword(map);
 			if (isSuccess) {
 				User user = userService.login(oldUser.getUsername());
@@ -87,6 +86,6 @@ public class UserController {
 	}
 
 	public static void main(String[] args) {
-		System.out.println(RixinUtil.MD5("1"));
+		System.out.println(MD5Util.MD5("1"));
 	}
 }
