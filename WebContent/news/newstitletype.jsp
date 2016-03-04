@@ -11,7 +11,7 @@
 		<ul class="am-list am-list-static">
 			<c:forEach items="${NewsTitleMenu}" var='newsTitle'>
 				<li style="height: 35px; padding-top: 5px;"><a
-					style="padding: 0px; margin: 0px;"
+					class="am-text-truncate" style="padding: 0px; margin: 0px;"
 					onClick="openPage('${basePath}${NewsTitleMenuUrl}&id=${newsTitle.id}&typename=${newsTitle.typename}&typeid=${newsTitle.typeid}&typepath=${newsTitle.typepath}&htmlName=${newsTitle.id}')"
 					href="javascript:void(0)"> ${newsTitle.title} </a></li>
 			</c:forEach>
