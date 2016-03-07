@@ -16,15 +16,7 @@ import com.rixin.common.util.MD5Util;
 import com.rixin.user.model.User;
 import com.rixin.user.service.IUserService;
 
-/**
- * 登陆
- * 
- * @author 于辉
- * 
- */
-// 注解配置控制器
 @Controller
-// 设置访问路径
 @RequestMapping("/user")
 public class UserController {
 	// 注入LoginServiceImpl对象
@@ -64,28 +56,42 @@ public class UserController {
 		}
 	}
 
-	@RequestMapping("/updatePassword.do")
+	/**
+	 * 修改用户密码
+	 * @param id
+	 * @param password_old
+	 * @param password_new
+	 * @return
+	 */
+	@RequestMapping("/updateUserPassword.do")
 	@ResponseBody
-	public Map<String, Object> updatePassword(String oldPassword, String newPassword, HttpSession session) {
+	public Map<String, Object> updateUserPassword(String id, String password_old, String password_new,
+			HttpSession session) {
 		Map<String, Object> result = new HashMap<String, Object>();
-		User oldUser = (User) session.getAttribute("user");
-		if (MD5Util.MD5(oldPassword).equals(oldUser.getPassword())) {
-			Map<String, Object> map = new HashMap<String, Object>();
-			map.put("id", oldUser.getId());
-			map.put("password", MD5Util.MD5(newPassword));
-			boolean isSuccess = userService.updatePassword(map);
-			if (isSuccess) {
-				User user = userService.login(oldUser.getUsername());
-				session.setAttribute("user", user);
+		boolean isSuccess = true;
+		try {
+			User user = new User();
+			User sessionUser = (User) session.getAttribute("user");
+			if ("admin".equals(sessionUser.getUsername())) {
+				user.setId(id);
+				user.setPassword(password_new);
+				userService.updateUserPassword(user);
+			} else {
+				user = userService.getUserById(id);
+				if (user.getPassword().equals(MD5Util.MD5(password_old))) {
+					user.setPassword(password_new);
+					userService.updateUserPassword(user);
+				} else {
+					isSuccess = false;
+					result.put("msg", "原密码输入错误");
+				}
 			}
-			result.put("isSuccess", isSuccess);
-			return result;
+		} catch (Exception e) {
+			isSuccess = false;
+			e.printStackTrace();
 		}
-		result.put("isSuccess", false);
+		result.put("isSuccess", isSuccess);
 		return result;
 	}
 
-	public static void main(String[] args) {
-		System.out.println(MD5Util.MD5("1"));
-	}
 }

@@ -9,11 +9,21 @@
 		select * from t_user where username = #{username}
 	</select>
 
+	<select id="getUserById" parameterType="String"
+		resultType="com.rixin.user.model.User">
+		select * from t_user
+		<where>
+			id = #{id}
+		</where>
+	</select>
 
-	<update id="updatePassword" parameterType="java.util.Map">
-		update t_user set
-		password=#{password}
-		where id=#{id}
+	<update id="updateUserPassword" parameterType="com.rixin.user.model.User">
+		update t_user
+		<set>
+			password = #{password}
+		</set>
+		<where>
+			id = #{id}
+		</where>
 	</update>
-
 </mapper>
