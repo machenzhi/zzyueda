@@ -1,118 +1,96 @@
 <%@ page language="java" contentType="text/html; charset=utf-8"
 	pageEncoding="utf-8"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
-<meta charset="utf-8">
-<meta http-equiv="X-UA-Compatible" content="IE=edge">
-<title>${sysinfo.name}-网站后台管理系统</title>
-<meta name="description" content="">
-<meta name="keywords" content="">
-<meta name="viewport"
-	content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
-<meta name="renderer" content="webkit">
-<meta http-equiv="Cache-Control" content="no-siteapp" />
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"%>
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<meta charset="UTF-8">
+<META HTTP-EQUIV="pragma" CONTENT="no-cache">
+<META HTTP-EQUIV="Cache-Control" CONTENT="no-cache, must-revalidate">
+<META HTTP-EQUIV="expires" CONTENT="Wed, 26 Feb 1997 08:21:57GMT">
+<title>${sysinfo.title}</title>
+<meta name="description" content="${sysinfo.description}">
+<meta name="keywords" content="${sysinfo.keywords}">
 <link rel="apple-touch-icon-precomposed"
 	href="../assets/i/app-icon72x72@2x.png">
 <link rel="icon" type="image/png" href="../img/favicon.png">
 <link rel="stylesheet" href="../assets/css/amazeui.min.css">
 <link rel="stylesheet" href="../assets/css/app.css">
 <link rel="stylesheet" href="../assets/css/admin.css">
+<link rel="stylesheet" href="../ztree/css/zTreeStyle/zTreeStyle.css"
+	type="text/css">
 <script src="../assets/js/jquery.min.js"></script>
 <script src="../assets/js/amazeui.min.js"></script>
-
-<style>
-.error{color: red;}
-.success{color: green;}
-</style>
+<!-- JS校验规则 -->
+<script type="text/javascript" src="${basePath}rixin_js/validation.js"></script>
+<!-- 只读状态控件状态修改 -->
+<script type="text/javascript" src="${basePath}rixin_js/readstyle.js"></script>
+<script type="text/javascript" src="${basePath}rixin_js/jquery.form.js"></script>
+</head>
 <script type="text/javascript">
+	var viewstate = "${viewstate}";// 获取当前用户 是否为read状态
+	//提交
+	var url = "${basePath}user/updateUserPassword.do";
 
-var flag=false;
-$(function(){
-
-		$('input[name=oldPassword]').blur(function(){
-				var oldPassword = $(this).val();
-				if(oldPassword == ''){
-					$("#oldPass").attr('class','error').html("不能为空");
-				}
-				else{
-					$("#oldPass").attr('class','success').html('');
-				}
-			});
-		$('input[name=newPassword]').blur(function(){
-				var password=$('#password').val();
-				var newPassword = $(this).val();
-				//非空验证
-				if(newPassword==''){
-					$("#newPass").attr('class','error').html("不能为空");
-				}else {
-					$("#newPass").attr('class','success').html("");
-					if(password == newPassword){
-						$("#pass").attr('class','success').html('');
-					}else{
-						flag=false;
-						if(password !='')
-						$("#pass").attr('class','error').html("两次输入密码不一致");
+	$(function() {
+		$('#submitButton').on('click', function() {
+			if (formValidate()) {
+				$("#submitForm").ajaxSubmit({
+					type : "POST",
+					url : url,
+					dataType : "json",
+					success : function(data) {
+						if (data.isSuccess) {
+							alert("恭喜，密码修改成功。");
+							window.close();
+						} else {
+							alert("抱歉，密码修改失败，请重新操作。");
+						}
 					}
-				}
-				
-			});
-		
-		$('input[name=password]').blur(function(){
-				var newPassword=$('#newPassword').val();
-				var password = $(this).val();
-				if(password==''){
-					$("#pass").attr('class','error').html("不能为空");
-				}else if(password == newPassword){
-					$("#pass").attr('class','success').html('');
-				}
-				else{
-					$("#pass").attr('class','error').html("两次输入密码不一致");
-				}
-			});
-});	
-
-
-function updatePassword(){
-	$('input').trigger('blur');//自动触发某类事件
-	 var length =$('.error').length;  
-	if(length==0){
-		$.post("${basePath}user/updatePassword.do", $("#myform").serialize(), function(data) {
-			if (data.isSuccess) {
-				//修改成功
-				$("#newPassword").val('');
-				$("#oldPassword").val('');
-				$("#password").val('');
-				alert("修改成功")
-			} else {
-				$("#oldPass").attr('class','error').html("密码不正确")
+				});
 			}
 		});
-	}
-}
-		
+	});
 </script>
-<div class="admin-content">
-<%-- content start --%>
-		<div class="am-fl am-cf" style="margin: 20px">
-			<strong class="am-text-primary am-text-lg">修改密码</strong>
-		</div><br><br><br>
-	<div class="am-u-sm-5 " style="margin: 20px">
-		<form method="post" class="am-form" id="myform">
-				<label>原密码:</label> 
-				<input type="password" name="oldPassword" id="oldPassword" placeholder="请输入原密码"/> <span id="oldPass" style="color: red"></span>
-				 <br>
-				<label for="password">新密码:</label> 
-				<input type="password" name="newPassword" id="newPassword" value="" placeholder="请输入新密码"> <span id="newPass" style="color: red"></span>
-				<br> 
-				<label for="password">确认新密码:</label> 
-				<input type="password" name="password" id="password" value="" placeholder="请再次输入新密码"><span id="pass" style="color: red"></span>
-				<br> 
-				<div class="am-cf">
-					<input onkeydown="javascript:check_login();" type="button" name=""
-						value="修改" class="am-btn am-btn-primary am-btn-sm am-fl"
-						onclick="javascript:updatePassword();">
+<body style="background-color: #F5F5F5">
+	<!--表单头信息-->
+	<jsp:include page="../public/formtitle.jsp" />
+	<div class="am-container" style="background-color: #FFFFFF">
+		<div data-am-widget="titlebar" class="am-titlebar am-titlebar-default">
+			<h2 class="am-titlebar-title ">修改密码</h2>
+			<nav class="am-titlebar-nav"></nav>
+		</div>
+		<form class="am-form" method="post" id="submitForm" name="submitForm">
+			<input type="hidden" name="id" id="id" value="${sessionScope.user.id}">
+			<div class="am-g">
+				<div style="margin-top: 2px;"
+					class="am-input-group am-u-sm-12 am-u-md-12">
+					<span class="am-input-group-label" style="width: 150px">原密码</span>
+					<input type="password" id="password_old" name="password_old"
+						placeholder="请输入原密码" required />
 				</div>
-			</form>
+				<div style="margin-top: 2px;"
+					class="am-input-group am-u-sm-12 am-u-md-12">
+					<span class="am-input-group-label" style="width: 150px">新密码</span>
+					<input type="password" id="password_new" name="password_new"
+						placeholder="请输入新密码（至少6位）" minLength="6"
+						valueSameTo="password:main" required />
+				</div>
+				<div style="margin-top: 2px;"
+					class="am-input-group am-u-sm-12 am-u-md-12">
+					<span class="am-input-group-label" style="width: 150px">再次输入新密码</span>
+					<input type="password" id="password_new2" name="password_new2"
+						placeholder="请再次输入新密码（至少6位）" minLength="6"
+						valueSameTo="password:other||两次填写的密码不一致" required />
+				</div>
+			</div>
+		</form>
+		<div align="center" class="am-u-sm-12 am-u-md-12"
+			style="margin-top: 20px; margin-bottom: 20px;">
+			<button type="button" id="submitButton" name="submitButton"
+				class="am-btn am-btn-success" style="width: 100%">保存</button>
+		</div>
 	</div>
-	
-	</div>
+</body>
+</html>

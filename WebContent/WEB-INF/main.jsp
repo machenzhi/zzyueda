@@ -120,25 +120,8 @@
 <p class="browsehappy">你正在使用<strong>过时</strong>的浏览器，Amaze UI 暂不支持。 请 <a href="http://browsehappy.com/" target="_blank">升级浏览器</a>
   以获得更好的体验！</p>
 <![endif]--%>
-	<header class="am-topbar admin-header" id="header">
-	<div class="am-topbar-brand">
-		<strong style="color: #5eb95e">${sysinfo.name}</strong> <span
-			class="am-badge">网站后台管理系统 v1.0</span>
-	</div>
-	<div class="am-collapse am-topbar-collapse" id="topbar-collapse">
-		<ul
-			class="am-nav am-nav-pills am-topbar-nav am-topbar-right admin-header-list">
-			<li><a style="cursor: pointer; color: #EA88AC;"
-				onclick="staticHtml('${basePath}sysinfo/staticHtml.do')"><span
-					class="am-icon-hand-o-up"></span>一键静态化</a></li>
-			<li><a href="${basePath}" target="_blank"><span
-					class="am-icon-home"></span>预览网站首页</a></li>
-			<li><a href="#"><span class="am-icon-user"></span>${user.truename}</a></li>
-			<li><a href="${basePath}common/exit.do"><span
-					class="am-icon-power-off"></span>退出</a></li>
-		</ul>
-	</div>
-	</header>
+	<!--表单头信息-->
+	<jsp:include page="public/formtitle.jsp" />
 	<div class="admin-content">
 		<%-- sidebar start --%>
 		<div class="admin-sidebar am-offcanvas" id="scolldiv"
@@ -152,10 +135,6 @@
 						href="javascript:initContent('${basePath}common/gotopage.do?gotourl=dictionary/dictionary');"
 						id="dictionary"><span
 							class="rx-FirstMenuColor am-icon-puzzle-piece"></span>&nbsp;信息类型</a></li>
-					<li><a class="hoverMenu"
-						href="javascript:initContent('${basePath}common/gotopage.do?gotourl=user/updatepassword');">
-							<span class="rx-FirstMenuColor am-icon-key"></span>&nbsp;修改密码
-					</a></li>
 				</ul>
 				<div class="am-panel am-panel-default admin-sidebar-panel">
 					<div class="am-panel-bd">

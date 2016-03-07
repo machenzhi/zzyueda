@@ -11,9 +11,17 @@
 	<div class="am-collapse am-topbar-collapse" id="topbar-collapse">
 		<ul
 			class="am-nav am-nav-pills am-topbar-nav am-topbar-right admin-header-list">
-			<li><a href="#"><span class="am-icon-user"></span>${user.truename}</a></li>
-			<li><a href="${basePath}login/exit.do"><span
-					class="am-icon-sign-out"></span> 退出</a></li>
+			<li><a style="cursor: pointer; color: #EA88AC;"
+				onclick="staticHtml('${basePath}sysinfo/staticHtml.do')"><span
+					class="am-icon-hand-o-up"></span>一键静态化</a></li>
+			<li><a href="${basePath}" target="_blank"><span
+					class="am-icon-home"></span>预览网站首页</a></li>
+			<li><a href="#"><span class="am-icon-user"></span>${sessionScope.user.truename}</a></li>
+			<li><a
+				href="${basePath}common/gotopage.do?gotourl=user/updatepassword"
+				target="_blank"><span class="am-icon-key"></span> 修改密码</a></li>
+			<li><a href="${basePath}common/exit.do"><span
+					class="am-icon-power-off"></span>退出</a></li>
 		</ul>
 	</div>
 </header>
