@@ -5,6 +5,5 @@
 		<h3 class="am-panel-title">联系我们</h3>
 	</div>
 	<div class="am-panel-bd">
-		${lianxiwomengaikuang.newsList[0].content}
-	</div>
+		${lianxiwomengaikuang.newsList[0].content}</div>
 </div>

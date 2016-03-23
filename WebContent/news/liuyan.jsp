@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=utf-8"
 	pageEncoding="utf-8"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"%>
 <!doctype html>
 <html class="no-js">
 <head>
@@ -15,6 +15,8 @@
 	content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
 <meta name="renderer" content="webkit">
 <meta http-equiv="Cache-Control" content="no-siteapp" />
+<script src="${basePath}assets/js/jquery.min.js"></script>
+<script src="${basePath}assets/js/amazeui.min.js"></script>
 </head>
 <body>
 	<%-- **************公共头部*****************   --%>
@@ -40,19 +42,18 @@
 			style="border-color: #979797; margin-top: 10px;">
 			<div class="am-cf">
 				<ol class="am-breadcrumb">
-					<li><a class="am-icon-home"
-						onClick="openPage('${basePath}')"
+					<li><a class="am-icon-home" onClick="openPage('${basePath}')"
 						href="javascript:void(0)">首页</a></li>
 					<li><a href="javascript:void(0)">留言</a></li>
 				</ol>
 				<!-- 多说评论框 start -->
-				<div class="ds-thread" data-thread-key="zzyueda"
-					data-title="郑州市悦达企业管理咨询有限公司" data-url="www.zzyueda.com"></div>
+				<div class="ds-thread" data-thread-key="shareme" data-title="晒迷人"
+					data-url="www.shareme.ren"></div>
 				<!-- 多说评论框 end -->
 				<!-- 多说公共JS代码 start (一个网页只需插入一次) -->
 				<script type="text/javascript">
 					var duoshuoQuery = {
-						short_name : "zzyueda"
+						short_name : "shareme"
 					};
 					(function() {
 						var ds = document.createElement('script');
