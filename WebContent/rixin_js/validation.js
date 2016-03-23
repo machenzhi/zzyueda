@@ -24,49 +24,6 @@ function myFieldCheck() {
 	parent.find(".formtips").remove();
 	$(this).removeClass("am-field-error");
 	$(this).removeClass("onError");
-	
-	// 验证唯一，去数据库查询
-	if ($(this).attr('isSingle') != undefined) {
-		var errorMsg = "";// 错误提示信息
-		var obj = $(this);
-		var url = obj.attr('isSingle');
-		if (url.indexOf('||') > -1) {
-			var urls = url.split("||");
-			url = urls[0];
-			errorMsg = urls[1];
-		}
-		var objValue = this.value;
-		var data = {}, name = obj.attr('name');
-		data[name] = objValue;
-		defaultValue = obj.attr('defaultValue');// 修改前的值
-		if (defaultValue != objValue) {
-			if (objValue != "") {
-				$
-						.ajax({
-							url : url,
-							data : data,
-							type : "POST",
-							async : false,// false为同步请求
-							success : function(data) {
-								if (!data) {
-									$(this).addClass("am-field-error");
-									$(this).addClass("onError");
-									if (errorMsg != "") {
-										errorMsg = '<font color="#DD514C">'
-												+ errorMsg + '</font>';
-									} else {
-										errorMsg = '<font color="#DD514C">该内容已存在，请更换。<font>';
-									}
-									parent.find(".formtips").remove();
-									parent
-											.append('<span class="formtips onError">'
-													+ errorMsg + '</span>');
-								}
-							}
-						});
-			}
-		}
-	}
 
 	/**
 	 * 长度验证：minLength="n" maxLength="n" 描述：minLength 为至少输入的长度，maxLength
@@ -134,7 +91,7 @@ function myFieldCheck() {
 		if (value != "" && !reg.test(this.value)) {
 			$(this).addClass("am-field-error");
 			$(this).addClass("onError");
-			var errorMsg = '<font color="#DD514C">请填入合法数字，小数点后保留' + decimalLength
+			var errorMsg = '<font color="#DD514C">请填入合法数字，并保留' + decimalLength
 					+ '位小数</font>';
 			parent.find(".formtips").remove();
 			parent.append('<span class="formtips onError">' + errorMsg
@@ -176,8 +133,7 @@ function myFieldCheck() {
 				errorMsg = validatetypes[1];
 			}
 			if (this.value != ""
-					&& !/(^\d{15}$)|(^\d{17}([0-9]|X)$)/
-							.test(this.value)) {
+					&& !/(^\d{15}$)|(^\d{17}([0-9]|X)$)/.test(this.value)) {
 				$(this).addClass("am-field-error");
 				$(this).addClass("onError");
 				if (errorMsg != "") {
@@ -260,7 +216,8 @@ function myFieldCheck() {
 				errorMsg = validatetypes[1];
 			}
 			if (this.value != ""
-					&& !/^(0|86|17951)?(13[0-9]|15[012356789]|17[678]|18[0-9]|14[57])[0-9]{8}$/.test(this.value)) {
+					&& !/^(0|86|17951)?(13[0-9]|15[012356789]|17[678]|18[0-9]|14[57])[0-9]{8}$/
+							.test(this.value)) {
 				$(this).addClass("am-field-error");
 				$(this).addClass("onError");
 				if (errorMsg != "") {
@@ -399,8 +356,60 @@ function myRequiredCheck() {
 			});
 }
 
+function isExist() {
+	$("input[isExist]")
+			.each(
+					function() {
+						var parent = $(this).parent();
+						var errorMsg = "";// 错误提示信息
+						var obj = $(this);
+						var url = obj.attr('isExist');
+						if (url.indexOf('||') > -1) {
+							var urls = url.split("||");
+							url = urls[0];
+							errorMsg = urls[1];
+						}
+						var objValue = $(this).val();
+						var data = {}, name = obj.attr('name');
+						data[name] = objValue;
+						defaultValue = obj.attr('defaultValue');// 修改前的值
+						if (defaultValue != objValue) {
+							if (objValue != "") {
+								$
+										.ajax({
+											url : url,
+											data : data,
+											type : "POST",
+											async : false,// false为同步请求
+											success : function(data) {
+												if (data) {
+													$(this).addClass(
+															"am-field-error");
+													$(this).addClass("onError");
+													if (errorMsg != "") {
+														errorMsg = '<font color="#DD514C">'
+																+ errorMsg
+																+ '</font>';
+													} else {
+														errorMsg = '<font color="#DD514C">该内容已存在，请更换。<font>';
+													}
+													parent.find(".formtips")
+															.remove();
+													parent
+															.append('<span class="formtips onError">'
+																	+ errorMsg
+																	+ '</span>');
+												}
+											}
+										});
+							}
+						}
+					});
+}
+
 function formValidate() {
 	myRequiredCheck();
+	isExist();
 	var numError = $('body .onError').length;
 	if (numError > 0) {
 		alert("你好，信息录入有误，不能保存。\n\n说明：红色输入框内为必填内容");
