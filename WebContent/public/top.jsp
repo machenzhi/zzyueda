@@ -1,7 +1,7 @@
 ﻿<%@ page language="java" contentType="text/html; charset=utf-8"
 	pageEncoding="utf-8"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"%>
 <link rel="stylesheet" href="${basePath}assets/css/amazeui.min.css">
 <link href="${basePath}css/navigation.css" rel="stylesheet"
 	type="text/css" />
@@ -97,10 +97,6 @@
 		});
 	});
 
-	function click_who(who) {
-		who.click();
-	}
-
 	function openPage(requestUrl) {
 		var htmlName = "htmlName";
 		var htmlNameIdx = requestUrl.indexOf("htmlName");
@@ -129,7 +125,7 @@
 	<h1 class="am-header-title">
 		<a onClick="openPage('${basePath}${dictionarys[0].url}')"
 			href="javascript:void(0)"><img
-			src="${basePath}img/titlelogo_sm.png"> </a>郑州达企业管理咨询有限公司
+			src="${basePath}img/titlelogo_sm.png"> </a>${sysinfo.name}
 	</h1>
 </header>
 <%-- Menu --%>
@@ -184,9 +180,7 @@
 <div class="am-show-md-up">
 	<div class="am-container">
 		<div class="am-fl">
-			<a
-				onClick="openPage('${basePath}')"
-				href="javascript:void(0)"> <img
+			<a onClick="openPage('${basePath}')" href="javascript:void(0)"> <img
 				src="${basePath}img/titlelogo.png" />
 			</a>
 		</div>
@@ -256,8 +250,9 @@
 			<li><img src="${basePath}img/slider/2.png"></li>
 		</ul>
 	</div>
-	<div class="am-slider am-slider-default am-show-md-up"
-		data-am-flexslider="{playAfterPaused: 8000}">
+
+	<div data-am-widget="slider" class="am-slider am-slider-a2"
+		data-am-slider='{&quot;directionNav&quot;:false}'>
 		<ul class="am-slides">
 			<li style="background:url(${basePath}img/slider/1bg.png) repeat-x"><img
 				style="width: 1000px; height: 300px;" class="am-u-sm-centered"
@@ -267,6 +262,7 @@
 				src="${basePath}img/slider/2.png" /></li>
 		</ul>
 	</div>
+
 </div>
 <%-- *****************图片轮播 结束********************** --%>
 
